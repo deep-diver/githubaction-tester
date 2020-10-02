@@ -19,19 +19,10 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - name: get_branch
+      - name: test
         run: |
-          git config --global user.name 'GitHub Action'
-          git config --global user.email 'deep.diver.csp@gmail.com'
-                            
-          git branch "2020/10"
-          git checkout "2020/10" 
           touch testfile2
-          
-          git add testfile2
-          git commit -am 'update...'
-          git push --set-upstream origin 2020/10
-          
+                    
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with: 
