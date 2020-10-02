@@ -31,7 +31,6 @@ jobs:
           git add testfile2
           git commit -am 'update...'
           git push --set-upstream origin 2020/10
-          git checkout main
           
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
