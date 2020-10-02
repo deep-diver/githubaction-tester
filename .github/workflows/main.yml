@@ -41,5 +41,4 @@ jobs:
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           branch: "2020/10"
-          delete-branch: true
           title: '[Example] Update report'
