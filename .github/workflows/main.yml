@@ -30,4 +30,4 @@ jobs:
           
           git add testfile2
           git commit -am 'update...'
-          git push
+          git push --set-upstream origin 2020/10
