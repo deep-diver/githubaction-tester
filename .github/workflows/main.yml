@@ -26,8 +26,19 @@ jobs:
                             
           git branch "2020/10"
           git checkout "2020/10"
-          touch testfile2
+          touch testfile3
           
-          git add testfile2
+          git add testfile3
           git commit -am 'update...'
           git push --set-upstream origin 2020/10
+          
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with: 
+          token: ${{ secrets.TOKEN }}
+          commit-message: Test
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          branch: "2020/10"
+          delete-branch: true
+          title: '[Example] Update report'
