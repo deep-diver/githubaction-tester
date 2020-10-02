@@ -25,7 +25,7 @@ jobs:
           git config --global user.email 'deep.diver.csp@gmail.com'
                             
           git branch "2020/10"
-          git checkout "2020/10"
+          git checkout "2020/10" 
           touch testfile2
           
           git add testfile2
