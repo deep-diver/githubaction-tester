@@ -27,5 +27,6 @@ jobs:
           git branch "2020/10"
           touch testfile
           
+          git add testfile
           git commit -am 'update...'
           git push
