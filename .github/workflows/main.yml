@@ -21,4 +21,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: get_branch
         run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'deep.diver.csp@gmail.com'
+                            
           git branch "2020/10"
+          touch testfile
+          
+          git commit -am 'update...'
+          git push
