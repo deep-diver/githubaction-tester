@@ -14,7 +14,7 @@ validation_operator_name: action_list_operator
 # Great Expectations in your pipelines easy!
 batches:
   - batch_kwargs:
-      path: /Users/chansungpark/Development/githubaction-tester/great_expectations/../data/titanic.csv
+      path: /github/workspace/data/titanic.csv
       datasource: data__dir
       data_asset_name: titanic
     expectation_suite_names: # one or more suites may validate against a single batch
