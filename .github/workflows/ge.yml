@@ -1,29 +1,56 @@
-# Automatically Runs Great Expectation Checkpoints on every push to a PR, and provides links to hosted Data Docs if there an error.
-name: PR Push
-on: pull_request 
+# Allows repo owners to view Data Docs hosted on Netlify for a PR with the command "/data-docs" as a comment in a PR.
+name: PR Comment
+on: [issue_comment]
 
 jobs:
-  great_expectations_validation:
+  demo-pr:
+    # Check whether a comment with the command '/data-docs' is made on a pull request (not an issue).
+    if: | 
+      (github.event.issue.pull_request != null) &&
+      contains(github.event.comment.body, '/data-docs')
     runs-on: ubuntu-latest
     steps:
 
-      # Clone the contents of the repository
-    - name: Copy Repository contents
+     # Get the HEAD SHA of the pull request that has been commented on.
+    - name: Fetch context about the PR that has been commented on
+      id: chatops
+      uses: actions/github-script@v1
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          // Get the branch name
+          github.pulls.get({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.payload.issue.number
+          }).then( (pr) => {
+            // Get latest SHA of current branch
+            var SHA = pr.data.head.sha
+            console.log(`::set-output name=SHA::${SHA}`)
+          })
+
+    # Clone the contents of the repository at the SHA fetched in the previous step
+    - name: Copy the PR's branch repository contents
       uses: actions/checkout@main
-      
-      # Run Great Expectations and deploy Data Docs to Netlify
-      # In this example, we have configured a Checkpoint called "locations.rds.chk".
+      with:
+        ref: ${{ steps.chatops.outputs.SHA }}
+
+#     - name: Run data pipeline on dev server
+#       run: # <Put your code here> run your data pipeline in development so you can test the results with Great Expectations
+
+    # Run Great Expectation Checkpoints and deploy Data Docs to Netlify
     - name: Run Great Expectation Checkpoints
       id: ge
       # Use @v0.x instead of @main to pin to a specific version, e.g. @v0.2
-      uses: great-expectations/great_expectations_action@main
+      uses: great-expectations/great_expectations_action@main 
       with:
-        CHECKPOINTS: "my_checkpoint" # This can be a comma-separated list of Checkpoints
+        CHECKPOINTS: "my_checkpoint"
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
-      # Comment on PR with link to deployed Data Docs if there is a failed Checkpoint, otherwise don't comment.
-    - name: Comment on PR 
+    # Comment on PR with link to deployed Data Docs on Netlify. In this example, we comment
+    #  on the PR with a message for both failed and successful checks.
+    - name: Comment on PR
       if: ${{ always() }}
       uses: actions/github-script@v2
       with:
@@ -36,10 +63,10 @@ jobs:
             }
             console.log(`Message to be emitted: ${msg}`);
             github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: msg
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: msg
             })
       env:
         URL: "${{ steps.ge.outputs.netlify_docs_url }}"
