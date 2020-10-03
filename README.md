@@ -1,4 +1,3 @@
 # Hello World!
  
-hi there. trying to test great expectations GitHub Action!
- 
+hi there. trying to test great expectations GitHub Action! :)
