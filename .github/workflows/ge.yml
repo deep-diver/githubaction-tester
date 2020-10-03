@@ -25,7 +25,7 @@ jobs:
       # Comment on PR with link to deployed Data Docs if there is a failed Checkpoint, otherwise don't comment.
     - name: Comment on PR 
       if: ${{ always() }}
-      uses: actions/github-script@v3
+      uses: actions/github-script@v2
       with:
         github-token: ${{ secrets.TOKEN }}
         script: |
@@ -44,5 +44,5 @@ jobs:
       env:
         URL: "${{ steps.ge.outputs.netlify_docs_url }}"
         FAILED_CHECKPOINTS: ${{ steps.ge.outputs.failing_checkpoints }}
-        SHA: ${{ github.sha }}
+        SHA: ${{ steps.chatops.outputs.SHA }}
         FAILURE_FLAG: ${{ steps.ge.outputs.checkpoint_failure_flag }}
