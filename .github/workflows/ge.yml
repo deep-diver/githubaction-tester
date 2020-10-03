@@ -16,7 +16,7 @@ jobs:
       id: chatops
       uses: actions/github-script@v1
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ secrets.TOKEN }}
         script: |
           // Get the branch name
           github.pulls.get({
