@@ -1,0 +1,3 @@
+outs:
+- md5: 9b75560db14fbe6a5e86cb55f72faf70
+  path: titanic.csv
