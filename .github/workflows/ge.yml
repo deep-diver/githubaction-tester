@@ -35,6 +35,22 @@ jobs:
       with:
         ref: ${{ steps.chatops.outputs.SHA }}
 
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Set up DVC
+      uses: iterative/setup-dvc@v1
+
+    - name: dvc pull
+      env:
+        SYMMETRIC_KEY: ${{ secrets.GPG_KEY }}
+      run: |
+        gpg --quiet --batch --yes --decrypt --passphrase="$SYMMETRIC_KEY" --output=.dvc/config .dvc/config.gpg
+        gpg --quiet --batch --yes --decrypt --passphrase="$SYMMETRIC_KEY" --output=.dvc/tmp/gdrive-user-credentials.json .dvc/tmp/gdrive-user-credentials.json.gpg
+        dvc pull
+
 #     - name: Run data pipeline on dev server
 #       run: # <Put your code here> run your data pipeline in development so you can test the results with Great Expectations
 
