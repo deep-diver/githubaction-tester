@@ -15,4 +15,4 @@ jobs:
       - name: test
         run: |
           nvidia-smi > report.md
-          cml-send-comment report.md --commit-sha d1b89c5af4183d7f75d610664c8af23f87909664
+          cml-send-comment report.md
