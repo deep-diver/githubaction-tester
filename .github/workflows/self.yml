@@ -7,7 +7,7 @@ jobs:
     if: | 
       (github.event.issue.pull_request != null) &&
       contains(github.event.comment.body, '/nvidia-smi')    
-    runs-on: [cml, gpu]
+    runs-on: [self-hosted, cml, gpu]
 
     steps:
       - uses: actions/checkout@v2
