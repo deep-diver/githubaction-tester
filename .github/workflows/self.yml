@@ -1,9 +1,12 @@
 name: train-my-model
 
-on: [push]
+on: [issue_comment]
 
 jobs:
   train:
+    if: | 
+      (github.event.issue.pull_request != null) &&
+      contains(github.event.comment.body, '/nvidia-smi')    
     runs-on: [self-hosted, Linux, x64]
 
     steps:
@@ -11,4 +14,5 @@ jobs:
 
       - name: test
         run: |
-          nvidia-smi
+          nvidia-smi > report.md
+          cml-send-comment report.md
