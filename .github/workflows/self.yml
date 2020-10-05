@@ -4,11 +4,11 @@ on: [push]
 
 jobs:
   train:
-    runs-on: [self-hosted, macOS, x64]
+    runs-on: [self-hosted, Linux, x64]
 
     steps:
       - uses: actions/checkout@v2
 
       - name: test
         run: |
-          echo 'Hi from Local GitHub Action runner!'
+          nvidia-smi
