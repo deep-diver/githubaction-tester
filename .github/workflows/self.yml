@@ -11,8 +11,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
       - name: test
+        env:
+          repo_token: ${{ secrets.TOKEN }}
         run: |
-          nvidia-smi > report.md
+          CODEBLOCK="\`\`\`"
+          echo $CODEBLOCK > report.md
+          nvidia-smi >> report.md
+          echo $CODEBLOCK >> report.md
+          
           cml-send-comment report.md
