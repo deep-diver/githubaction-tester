@@ -1,4 +1,5 @@
 from fastai.vision.all import *
+import matplotlib 
 
 mnist = DataBlock(blocks=(ImageBlock(cls=PILImageBW), CategoryBlock), 
                   get_items=get_image_files, 
@@ -6,4 +7,4 @@ mnist = DataBlock(blocks=(ImageBlock(cls=PILImageBW), CategoryBlock),
                   get_y=parent_label)
 dls = mnist.dataloaders(untar_data(URLs.MNIST_TINY))
 dls.show_batch(max_n=9, figsize=(4,4))
-savefig('show_batch.png')
+matplotlib.pyplot.savefig(('show_batch.png')
