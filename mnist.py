@@ -1,6 +1,6 @@
 from fastai.vision.all import *
 
-path = untar_data(URLs.PET)
+path = untar_data(URLs.PETS)
 block = DataBlock(blocks=(ImageBlock, CategoryBlock),
                   get_items=get_image_files,
                   get_y=parent_label,
