@@ -6,7 +6,7 @@ jobs:
   train:
     if: | 
       (github.event.issue.pull_request != null) &&
-      contains(github.event.comment.body, '/fastai-version')    
+      contains(github.event.comment.body, '/mnist-training')    
     runs-on: [self-hosted, cml, gpu]
 
     steps:
