@@ -31,6 +31,6 @@ jobs:
         env:
           repo_token: ${{ secrets.CML_GITHUB_TOKEN }}
         run: |
-          python -c 'from fastai.vision.all import *; print(fastai.__version__)' > report.md
+          python tester.py > report.md
           
           cml-send-comment report.md --commit-sha ${{ steps.chatops.outputs.SHA }}
