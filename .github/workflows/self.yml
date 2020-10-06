@@ -15,10 +15,7 @@ jobs:
         env:
           repo_token: ${{ secrets.CML_GITHUB_TOKEN }}
         run: |
-          CODEBLOCK="\`\`\`"
-          echo $CODEBLOCK > report.md
-          nvidia-smi >> report.md
-          echo $CODEBLOCK >> report.md
+          nvidia-smi > report.md
           cat report.md
           
           cml-send-comment report.md
