@@ -32,7 +32,10 @@ jobs:
         env:
           repo_token: ${{ secrets.CML_GITHUB_TOKEN }}
         run: |
-          nvidia-smi > report.md
+          CODEBLOCK = "\`\`\`"
+          echo $CODEBLOCK > report.md
+          nvidia-smi >> report.md
+          echo $CODEBLOCK > repot.md
           cat report.md
           
           cml-send-comment report.md --commit-sha ${{ steps.chatops.outputs.SHA }}
