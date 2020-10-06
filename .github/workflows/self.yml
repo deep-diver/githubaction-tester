@@ -27,11 +27,6 @@ jobs:
               console.log(`::set-output name=SHA::${SHA}`)
             })
 
-      - name: Copy the PR's branch repository contents
-        uses: actions/checkout@main
-        with:
-          ref: ${{ steps.chatops.outputs.SHA }}
-
       - uses: actions/checkout@v2
       - name: test
         env:
