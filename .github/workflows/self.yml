@@ -10,6 +10,28 @@ jobs:
     runs-on: [self-hosted, cml, gpu]
 
     steps:
+      - name: Fetch context about the PR that has been commented on
+        id: chatops
+        uses: actions/github-script@v1
+        with:
+          github-token: ${{ secrets.TOKEN }}
+          script: |
+            // Get the branch name
+            github.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.issue.number
+            }).then( (pr) => {
+              // Get latest SHA of current branch
+              var SHA = pr.data.head.sha
+              console.log(`::set-output name=SHA::${SHA}`)
+            })
+
+      - name: Copy the PR's branch repository contents
+        uses: actions/checkout@main
+        with:
+          ref: ${{ steps.chatops.outputs.SHA }}
+
       - uses: actions/checkout@v2
       - name: test
         env:
@@ -18,4 +40,4 @@ jobs:
           nvidia-smi > report.md
           cat report.md
           
-          cml-send-comment report.md
+          cml-send-comment report.md --commit-sha ${{ steps.chatops.outputs.SHA }}
