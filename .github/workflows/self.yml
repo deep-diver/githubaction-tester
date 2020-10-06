@@ -32,7 +32,7 @@ jobs:
         env:
           repo_token: ${{ secrets.CML_GITHUB_TOKEN }}
         run: |
-          CODEBLOCK = "\`\`\`"
+          CODEBLOCK="\`\`\`"
           echo $CODEBLOCK > report.md
           nvidia-smi >> report.md
           echo $CODEBLOCK > repot.md
