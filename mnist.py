@@ -63,7 +63,10 @@ if __name__ == "__main__":
 	matplotlib.pyplot.clf()
 
 	learn = cnn_learner(dls, resnet34, metrics=[accuracy, error_rate])
-	learn.fine_tune(5, cbs=WandbCallback())
+        if args.wandb_key:
+    	    learn.fine_tune(5, cbs=WandbCallback())
+        else:
+            learn.fine_tune(5)
 
 	matplotlib.pyplot.figure(figsize=(6,3))
 	learn.recorder.plot_loss()
