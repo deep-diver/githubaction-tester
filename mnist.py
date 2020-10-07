@@ -13,7 +13,7 @@ dls.show_batch(max_n=9, figsize=(5,5))
 
 matplotlib.pyplot.savefig('show_batch.png')
 
-learn = cnn_learner(dls, resnet34, metrics=accuracy)
+learn = cnn_learner(dls, resnet18, metrics=accuracy)
 learn.fine_tune(3)
 learn.recorder.plot_loss()
 
