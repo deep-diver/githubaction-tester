@@ -1,0 +1,21 @@
+{
+  "data_asset_type": "Dataset",
+  "expectation_suite_name": "mnist.test.check",
+  "expectations": [],
+  "meta": {
+    "citations": [
+      {
+        "batch_kwargs": {
+          "data_asset_name": "test",
+          "datasource": "data__dir",
+          "path": "/Users/chansung/Developer/githubaction-tester/great_expectations/../data/test.csv"
+        },
+        "batch_markers": null,
+        "batch_parameters": null,
+        "citation_date": "20201007T045025.032219Z",
+        "comment": "New suite added via CLI"
+      }
+    ],
+    "great_expectations_version": "0.12.3"
+  }
+}
