@@ -33,5 +33,21 @@ jobs:
         run: |
           python mnist.py
           
-          cml-publish show_batch.png --md > report.md
+          echo "How is the training data look like? `show_batch()`" > report.md
+          cml-publish show_batch.png --md >> report.md
+          
+          echo "Training result based on `resnet34` archietecture. Training has been gone through 3 epochs" >> report.md
+          cml-publish loss.png --md >> report.md
+          
+          echo "Let's see a confusion matrix" >> report.md
+          cml-publish confusion_matrix.png --md >> report.md
+          
           cml-send-comment report.md --commit-sha ${{ steps.chatops.outputs.SHA }}
+
+
+
+
+
+
+
+
