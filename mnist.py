@@ -1,10 +1,10 @@
 from fastai.vision.all import *
 import matplotlib 
 
-path = untar_data(URLs.MNIST)
+path = untar_data(URLs.MNIST_TINY)
 mnist = DataBlock(blocks=(ImageBlock(cls=PILImageBW), CategoryBlock), 
                   get_items=get_image_files, 
-                  splitter=GrandparentSplitter(train_name='training', valid_name='testing'),
+                  splitter=GrandparentSplitter(),
                   get_y=parent_label,
                   item_tfms=Resize(224))
 
