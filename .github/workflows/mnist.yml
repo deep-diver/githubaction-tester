@@ -29,6 +29,8 @@ jobs:
               console.log(`::set-output name=SHA::${SHA}`)
             })
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ steps.chatops.outputs.SHA }}        
       - name: test
         env:
           repo_token: ${{ secrets.CML_GITHUB_TOKEN }}
