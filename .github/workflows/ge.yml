@@ -60,7 +60,7 @@ jobs:
       # Use @v0.x instead of @main to pin to a specific version, e.g. @v0.2
       uses: great-expectations/great_expectations_action@main 
       with:
-        CHECKPOINTS: "my_checkpoint"
+        CHECKPOINTS: "mnist.check.1"
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
