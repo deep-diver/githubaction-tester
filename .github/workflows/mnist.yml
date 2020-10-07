@@ -1,6 +1,8 @@
 name: train-mnist
 
-on: [issue_comment]
+on: 
+  issue_comment:
+    types: [created]
 
 jobs:
   train:
@@ -24,7 +26,6 @@ jobs:
             }).then( (pr) => {
               // Get latest SHA of current branch
               var SHA = pr.data.head.sha
-              var BODY = github.event.comment.body
               console.log(`::set-output name=SHA::${SHA}`)
             })
       - uses: actions/checkout@v2
@@ -32,7 +33,7 @@ jobs:
         env:
           repo_token: ${{ secrets.CML_GITHUB_TOKEN }}
         run: |
-          echo ${{ steps.chatops.outputs.BODY }}
+          echo ${{ github.event.comment.body }}
           python mnist.py
           
           echo "How is the training data look like? `show_batch()`" > report.md
