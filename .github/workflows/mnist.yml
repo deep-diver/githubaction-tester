@@ -28,6 +28,23 @@ jobs:
               var SHA = pr.data.head.sha
               console.log(`::set-output name=SHA::${SHA}`)
             })
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Set up DVC
+        uses: iterative/setup-dvc@v1
+
+      - name: dvc pull
+        env:
+          SYMMETRIC_KEY: ${{ secrets.GPG_KEY }}
+        run: |
+          gpg --quiet --batch --yes --decrypt --passphrase="$SYMMETRIC_KEY" --output=.dvc/config .dvc/config.gpg
+          gpg --quiet --batch --yes --decrypt --passphrase="$SYMMETRIC_KEY" --output=.dvc/tmp/gdrive-user-credentials.json .dvc/tmp/gdrive-user-credentials.json.gpg
+          dvc pull
+
       - uses: actions/checkout@v2
         with:
           ref: ${{ steps.chatops.outputs.SHA }}        
