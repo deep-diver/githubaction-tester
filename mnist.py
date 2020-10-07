@@ -1,6 +1,8 @@
 from fastai.vision.all import *
 import matplotlib 
 
+matplotlib.rcParams['figure.figsize'] = (3.0, 3.0)
+
 path = untar_data(URLs.MNIST_TINY)
 mnist = DataBlock(blocks=(ImageBlock(cls=PILImageBW), CategoryBlock), 
                   get_items=get_image_files, 
