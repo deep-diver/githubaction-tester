@@ -1,6 +1,7 @@
 from fastai.vision.all import *
 import matplotlib 
 
+PATH = Path('data/')
 train = pd.read_csv(f'data/train.csv')
 
 def get_items(path):
@@ -23,7 +24,7 @@ db = DataBlock(blocks=(ImageBlock(cls=PILImageBW), CategoryBlock),
           splitter=RandomSplitter(seed=42),
           get_y=get_y)
 
-dls = DataLoaders.from_dblock(db, df=train, source=PATH, bs=128)
+dls = DataLoaders.from_dblock(db, df=train, source=PATH, bs=32)
 dls.show_batch(max_n=5, ncols=5, nrows=1, figsize=(6,2))
 
 matplotlib.pyplot.savefig('show_batch.png')
