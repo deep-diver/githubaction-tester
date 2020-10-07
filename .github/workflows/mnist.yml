@@ -1,48 +1,50 @@
-# name: train-mnist
+name: train-mnist
 
-# on: [issue_comment]
+on: [issue_comment]
 
-# jobs:
-#   train:
-#     if: | 
-#       (github.event.issue.pull_request != null) &&
-#       contains(github.event.comment.body, '/mnist-training')    
-#     runs-on: [self-hosted, cml, gpu]
+jobs:
+  train:
+    if: | 
+      (github.event.issue.pull_request != null) &&
+      contains(github.event.comment.body, '/mnist-training')    
+    runs-on: [self-hosted, cml, gpu]
 
-#     steps:
-#       - name: Fetch context about the PR that has been commented on
-#         id: chatops
-#         uses: actions/github-script@v1
-#         with:
-#           github-token: ${{ secrets.TOKEN }}
-#           script: |
-#             // Get the branch name
-#             github.pulls.get({
-#               owner: context.repo.owner,
-#               repo: context.repo.repo,
-#               pull_number: context.payload.issue.number
-#             }).then( (pr) => {
-#               // Get latest SHA of current branch
-#               var SHA = pr.data.head.sha
-#               console.log(`::set-output name=SHA::${SHA}`)
-#             })
-#       - uses: actions/checkout@v2
-#       - name: test
-#         env:
-#           repo_token: ${{ secrets.CML_GITHUB_TOKEN }}
-#         run: |
-#           python mnist.py
+    steps:
+      - name: Fetch context about the PR that has been commented on
+        id: chatops
+        uses: actions/github-script@v1
+        with:
+          github-token: ${{ secrets.TOKEN }}
+          script: |
+            // Get the branch name
+            github.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.issue.number
+            }).then( (pr) => {
+              // Get latest SHA of current branch
+              var SHA = pr.data.head.sha
+              var BODY = github.event.comment.body
+              console.log(`::set-output name=SHA::${SHA}`)
+            })
+      - uses: actions/checkout@v2
+      - name: test
+        env:
+          repo_token: ${{ secrets.CML_GITHUB_TOKEN }}
+        run: |
+          echo ${{ steps.chatops.outputs.BODY }}
+          python mnist.py
           
-#           echo "How is the training data look like? `show_batch()`" > report.md
-#           cml-publish show_batch.png --md >> report.md
+          echo "How is the training data look like? `show_batch()`" > report.md
+          cml-publish show_batch.png --md >> report.md
           
-#           echo "Training result based on `resnet34` archietecture. Training has been gone through 3 epochs" >> report.md
-#           cml-publish loss.png --md >> report.md
+          echo "Training result based on `resnet34` archietecture. Training has been gone through 3 epochs" >> report.md
+          cml-publish loss.png --md >> report.md
           
-#           echo "Let's see a confusion matrix" >> report.md
-#           cml-publish confusion_matrix.png --md >> report.md
+          echo "Let's see a confusion matrix" >> report.md
+          cml-publish confusion_matrix.png --md >> report.md
           
-#           cml-send-comment report.md --commit-sha ${{ steps.chatops.outputs.SHA }}
+          cml-send-comment report.md --commit-sha ${{ steps.chatops.outputs.SHA }}
 
 
 
