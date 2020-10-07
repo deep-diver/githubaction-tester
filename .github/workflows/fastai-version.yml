@@ -1,36 +1,36 @@
-name: train-my-model
+# name: train-my-model
 
-on: [issue_comment]
+# on: [issue_comment]
 
-jobs:
-  train:
-    if: | 
-      (github.event.issue.pull_request != null) &&
-      contains(github.event.comment.body, '/fastai-version')    
-    runs-on: [self-hosted, cml, gpu]
+# jobs:
+#   train:
+#     if: | 
+#       (github.event.issue.pull_request != null) &&
+#       contains(github.event.comment.body, '/fastai-version')    
+#     runs-on: [self-hosted, cml, gpu]
 
-    steps:
-      - name: Fetch context about the PR that has been commented on
-        id: chatops
-        uses: actions/github-script@v1
-        with:
-          github-token: ${{ secrets.TOKEN }}
-          script: |
-            // Get the branch name
-            github.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.payload.issue.number
-            }).then( (pr) => {
-              // Get latest SHA of current branch
-              var SHA = pr.data.head.sha
-              console.log(`::set-output name=SHA::${SHA}`)
-            })
-      - uses: actions/checkout@v2
-      - name: test
-        env:
-          repo_token: ${{ secrets.CML_GITHUB_TOKEN }}
-        run: |
-          python tester.py > report.md
+#     steps:
+#       - name: Fetch context about the PR that has been commented on
+#         id: chatops
+#         uses: actions/github-script@v1
+#         with:
+#           github-token: ${{ secrets.TOKEN }}
+#           script: |
+#             // Get the branch name
+#             github.pulls.get({
+#               owner: context.repo.owner,
+#               repo: context.repo.repo,
+#               pull_number: context.payload.issue.number
+#             }).then( (pr) => {
+#               // Get latest SHA of current branch
+#               var SHA = pr.data.head.sha
+#               console.log(`::set-output name=SHA::${SHA}`)
+#             })
+#       - uses: actions/checkout@v2
+#       - name: test
+#         env:
+#           repo_token: ${{ secrets.CML_GITHUB_TOKEN }}
+#         run: |
+#           python tester.py > report.md
           
-          cml-send-comment report.md --commit-sha ${{ steps.chatops.outputs.SHA }}
+#           cml-send-comment report.md --commit-sha ${{ steps.chatops.outputs.SHA }}
