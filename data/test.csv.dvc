@@ -1,0 +1,3 @@
+outs:
+- md5: a35759d77c0a3dadb4d4253ff87ec430
+  path: test.csv

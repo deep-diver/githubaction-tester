@@ -15,10 +15,10 @@ config_version: 2.0
 # add a new datasource. Read more at https://docs.greatexpectations.io/en/latest/reference/core_concepts/datasource_reference.html
 datasources:
   data__dir:
-    module_name: great_expectations.datasource
     data_asset_type:
-      module_name: great_expectations.dataset
       class_name: PandasDataset
+      module_name: great_expectations.dataset
+    module_name: great_expectations.datasource
     batch_kwargs_generators:
       subdir_reader:
         class_name: SubdirReaderBatchKwargsGenerator
@@ -125,5 +125,5 @@ data_docs_sites:
 
 anonymous_usage_statistics:
   enabled: true
-  data_context_id: e0b6518b-b734-45eb-9011-c761f8cb7cff
+  data_context_id: 828f3361-0a61-4eda-8c57-e34f38993225
 notebooks:
