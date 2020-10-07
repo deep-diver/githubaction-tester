@@ -32,6 +32,10 @@ jobs:
       - name: Set up DVC
         uses: iterative/setup-dvc@v1
 
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ steps.chatops.outputs.SHA }}        
+
       - name: dvc pull
         env:
           SYMMETRIC_KEY: ${{ secrets.GPG_KEY }}
@@ -40,9 +44,6 @@ jobs:
           gpg --quiet --batch --yes --decrypt --passphrase="$SYMMETRIC_KEY" --output=.dvc/tmp/gdrive-user-credentials.json .dvc/tmp/gdrive-user-credentials.json.gpg
           dvc pull
 
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ steps.chatops.outputs.SHA }}        
       - name: test
         env:
           repo_token: ${{ secrets.CML_GITHUB_TOKEN }}
