@@ -1,6 +1,9 @@
 # Allows repo owners to view Data Docs hosted on Netlify for a PR with the command "/data-docs" as a comment in a PR.
 name: PR Comment
-on: [issue_comment]
+
+on: 
+  issue_comment:
+    types: [created]
 
 jobs:
   demo-pr:
