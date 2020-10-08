@@ -6,7 +6,7 @@ on:
     types: [created]
 
 jobs:
-  demo-pr:
+  great-expectation:
     # Check whether a comment with the command '/data-docs' is made on a pull request (not an issue).
     if: | 
       (github.event.issue.pull_request != null) &&
