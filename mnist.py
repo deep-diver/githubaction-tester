@@ -54,7 +54,8 @@ if __name__ == "__main__":
           	get_items=get_items,
           	get_x=get_x,
           	splitter=RandomSplitter(seed=42),
-          	get_y=get_y)
+          	get_y=get_y,
+		item_tfms=Resize(224))
 
 	dls = DataLoaders.from_dblock(db, df=train, source=PATH, bs=32)
 	dls.show_batch(max_n=5, ncols=5, nrows=1, figsize=(6,2))
